@@ -65,7 +65,7 @@ export default class App extends React.Component {
 
     onUnion = () => {
         if (this.state.selectedPolygons.length !== 2) {
-            alert("Please select exactly 2 polygons");
+            // this should be impossible with disabled buttons
             return;
         }
         let poly1 = this.state.selectedPolygons[0];
@@ -78,12 +78,11 @@ export default class App extends React.Component {
         }
 
         this.mergeSelected(union);
-
     }
 
     onIntersection = () => {
         if (this.state.selectedPolygons.length !== 2) {
-            alert("Please select exactly 2 polygons");
+            // this should be impossible with disabled buttons
             return;
         }
         let poly1 = this.state.selectedPolygons[0];
@@ -94,7 +93,7 @@ export default class App extends React.Component {
             alert("The selected polygons do not intersect");
             return;
         }
-        if ( intersection.geometry.type === 'MultiPolygon') {
+        if (intersection.geometry.type === 'MultiPolygon') {
             alert("Intersection creates disjoint polygons");
             return;
         }
@@ -135,7 +134,7 @@ export default class App extends React.Component {
             <div className="App">
                 <Grid container spacing={2}>
 
-                    <Grid item xs={3} container justifyContent="center">
+                    <Grid item xs={3} alignItems="center" direction="column" container>
                         <ProposalList proposals={this.state.proposals} selectProposal={this.selectProposal} />
                     </Grid>
 
@@ -143,9 +142,9 @@ export default class App extends React.Component {
                         <WorkSurface proposal={this.state.selectedProposal} selectPolygon={this.selectPolygon} />
                     </Grid>
 
-                    <Grid item xs={3}>
+                    <Grid item xs={3} alignItems="center" direction="column" container>
                         <Statistics proposal={this.state.selectedProposal} selectedPolygons={this.state.selectedPolygons} />
-                        <Operations onUnion={this.onUnion} onIntersection={this.onIntersection} />
+                        <Operations onUnion={this.onUnion} onIntersection={this.onIntersection} selectedPolygons={this.state.selectedPolygons}/>
                     </Grid>
                 </Grid>
             </div>
